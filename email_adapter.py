@@ -82,7 +82,7 @@ def process_email_data(raw_data):
     return clean_data
 
 ##################################################
-## @brief Iterate through all files in a dir, process them and save the output to the output dir 
+## @brief   Iterate through all files in a dir, process them and save the output to the output dir 
 ## @in string, string     input_dir, output_dir
 ## @out void
 ##################################################
