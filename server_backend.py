@@ -7,19 +7,18 @@ model = joblib.load("phishing_model.pkl")
 
 app = FastAPI()
 
-class EmailRequest(BaseModel):
-    content: str
-
-app.post("/check-email")
-
 app.add_middleware(
-    CORSMiddleware,
+CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
-async def analyze_email(request: EmailRequest):
-    print(f"Received data: {request.content[:50]}...")
+class EmailRequest(BaseModel):
+    content: str
+
+@app.post("/check-email")
 
 ##################################################
 ## @brief     Analyze email content to determine if it's phishing or ham.
@@ -27,6 +26,7 @@ async def analyze_email(request: EmailRequest):
 ## @out  dict
 ##################################################
 async def analyze_email(request: EmailRequest):
+    print(f"Received data: {request.content[:50]}...")
     if not request.content:
         raise HTTPException(status_code=400, detail="No content provided")
     
