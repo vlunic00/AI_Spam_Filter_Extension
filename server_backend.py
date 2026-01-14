@@ -35,10 +35,12 @@ async def analyze_email(request: EmailRequest):
     probs = model.predict_proba([request.content])[0]
     confidence = float(max(probs))
 
+    print(f"Prediction: {prediction}, Confidence: {confidence:.4f}")
+
     return {
         "label": str(prediction),
         "confidence": confidence,
-        "is_phishing": True if str(prediction).lower() == 'phishing' else False
+        "is_phishing": True if str(prediction).lower() == 'spam' else False
     }
 
 if __name__ == "__main__":
